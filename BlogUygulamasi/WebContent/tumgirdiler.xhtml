@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+		<title>Kullanıcı İşlemleri</title>
+		<link href="./resources/css/default.css" rel="stylesheet"
+				type="text/css" />
+		<link href="./resources/css/csslayout.css" rel="stylesheet"
+				type="text/css" />
+</h:head>
+<h:body>
+		<h:form>
+				<div id="baslik">JavabLogum</div>
+				<div id="aciklama">
+						<h:outputText rendered="#{KullaniciBean.kullaniciBilgisi == null}"
+								value="(Sitemize Hoşgeldiniz.)" />
+
+						<h:outputText rendered="#{KullaniciBean.kullaniciBilgisi != null}"
+								value="Hoş Geldin #{KullaniciBean.kullaniciAdi} sistemden çıkmak istiyorsan" />
+						<h:commandLink
+								rendered="#{KullaniciBean.kullaniciBilgisi != null}"
+								style="color: white;" value="burayı tıklayabilirsin."
+								action="#{KullaniciBean.cikis}" />
+
+				</div>
+				<div id="menu">
+						<ul id="nav">
+
+								<li><a href="blog.xhtml">Bloğa Geri Dön</a></li>
+								<li><h:commandLink
+												action="#{KullaniciBean.kullanicininBloglariniListele()}"
+												value="Blogları Getir" /></li>
+								<li><h:commandLink value="Tüm Blogları Listele"
+												action="#{KullaniciBean.tumBloglarıListele()}" /></li>
+						</ul>
+				</div>
+				<div id="giris">
+						<br />
+
+						<h:dataTable width="94%" value="#{KullaniciBean.girdiListesi}"
+								rendered="#{KullaniciBean.blogListesi ne null and KullaniciBean.girdiListesi ne null}"
+								var="girdi" styleClass="bloglar" headerClass="tableHead">
+								<f:facet name="header">Girdi Listesi</f:facet>
+								<h:column headerClass="colHead">
+										<f:facet name="header"> Girdi Başlığı </f:facet>
+										<h:commandLink action="#{KullaniciBean.girdiyeGit(girdi)}"
+												value="#{girdi.girdiBaslik}" />
+								</h:column>
+								<h:column headerClass="colHead">
+										<f:facet name="header"> Girdi İçeriği(Özet) </f:facet>
+										<h:outputText value="#{girdi.girdiIcerik}" />
+								</h:column>
+								<h:column headerClass="colHead">
+										<f:facet name="header"> Girdi Tarihi </f:facet>
+										<h:outputText value="#{girdi.girdiTarih}" />
+								</h:column>
+								<h:column headerClass="colHead"
+										rendered="#{KullaniciBean.kullaniciBlogSahibiVeyaAdminMi}">
+										<f:facet name="header"> İşlemler </f:facet>
+										<h:commandLink
+												action="#{KullaniciBean.girdiDuzenleSayfasi(girdi)}"
+												value="Düzenle" />
+										<h:commandLink action="#{KullaniciBean.girdiSil(girdi)}"
+												value="Sil" />
+								</h:column>
+						</h:dataTable>
+						<h:outputText
+								rendered="#{KullaniciBean.girdiListesi == null and KullaniciBean.kullaniciBlogSahibiVeyaAdminMi}"
+								value="Blog için herhangi bir girdi bulunamadı. Yeni bir girdi oluşturabilmek için girdi butonuna tıklayınız."
+								style="font-size: 16px; font-weight: bold" />
+						<br />
+						<h:commandButton
+								rendered="#{KullaniciBean.kullaniciBlogSahibiVeyaAdminMi}"
+								action="#{KullaniciBean.yeniGirdi()}" value="Yeni Girdi" />
+				</div>
+				<div id="footer">ABDULLAHSEN</div>
+		</h:form>
+</h:body>
+</html>

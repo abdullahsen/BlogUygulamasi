@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+		xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+		<title>Giriş Sayfası</title>
+
+		<link href="./resources/css/default.css" rel="stylesheet"
+				type="text/css" />
+		<link href="./resources/css/csslayout.css" rel="stylesheet"
+				type="text/css" />
+
+</h:head>
+<h:body>
+		<div id="baslik">JavabLogum</div>
+		<div id="aciklama">
+				<h:outputText rendered="#{KullaniciBean.kullaniciBilgisi == null}"
+						value="(Sitemize Hoşgeldiniz.)" />
+				<h:form>
+						<h:outputText rendered="#{KullaniciBean.kullaniciBilgisi != null}"
+								value="Hoş Geldin #{KullaniciBean.kullaniciAdi} sistemden çıkmak istiyorsan" />
+						<h:commandLink
+								rendered="#{KullaniciBean.kullaniciBilgisi != null}"
+								style="color: white;" value="burayı tıklayabilirsin."
+								action="#{KullaniciBean.cikis}" />
+				</h:form>
+		</div>
+		<div id="giris">
+				<h:form id="girisFormu">
+						<h:panelGrid columns="2">
+								<h:outputText style="font-weight: bold;" value="Kullanıcı Adı:" />
+								<h:inputText style="font-weight: bold; color:red;"
+										value="#{KullaniciBean.kullaniciAdi}" required="true"
+										requiredMessage="Kullanıcı adı alanı boş bırakılamaz." />
+								<h:outputText style="font-weight: bold;" value="Şifre:" />
+								<h:inputSecret id="password"
+										style="font-weight: bold; color:red;"
+										value="#{KullaniciBean.sifre}" required="true"
+										requiredMessage="Şifre alanı boş bırakılamaz." />
+								<h:outputText value="" />
+								<h:commandButton style="font-weight: bold; color: red;"
+										value="Giriş" action="#{KullaniciBean.girisYap}" />
+								<f:facet name="footer">
+										<h:messages />
+								</f:facet>
+						</h:panelGrid>
+				</h:form>
+		</div>
+		<div id="footer">ABDULLAHŞEN</div>
+</h:body>
+</html>

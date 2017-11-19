@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+		<title>Kullanıcı İşlemleri</title>
+		<link href="./resources/css/default.css" rel="stylesheet"
+				type="text/css" />
+		<link href="./resources/css/csslayout.css" rel="stylesheet"
+				type="text/css" />
+</h:head>
+<h:body>
+		<h:form>
+				<div id="baslik">BLOG SİTESİ</div>
+				<div id="aciklama">
+						Hoş geldiniz #{KullaniciBean.kullaniciAdi} sistemden çıkmak için
+						<h:commandLink style="color:white;"
+								action="#{KullaniciBean.cikis()}" value="tiklayiniz" />
+				</div>
+				<div id="menu">
+						<ul id="nav">
+								<li><h:commandLink
+												rendered="#{KullaniciBean.kullaniciBlogSahibiVeyaAdminMi}"
+												action="#{KullaniciBean.kullanicininBloglariniListele()}"
+												value="Bloglarımı Getir" /></li>
+								<li><h:commandLink
+												action="#{KullaniciBean.tumBloglarıListele()}"
+												value="Tüm Blogları Listele" /></li>
+								<li><h:commandLink
+												rendered="#{KullaniciBean.kullaniciBlogSahibiVeyaAdminMi}"
+												action="#{KullaniciBean.yeniBlog()}"
+												value="Yeni Blog Oluştur" /></li>
+						</ul>
+				</div>
+				<div id="giris">
+						<br /> <br />
+						<h:panelGrid columns="2">
+								<h:outputText style="font-weight: bold;" value="Blog Başlığı: " />
+								<h:inputText value="#{KullaniciBean.blogBaslik}" />
+						</h:panelGrid>
+						<br /> <br />
+						<h:panelGrid columns="2">
+								<h:outputText style="font-weight: bold;" value="Blog İçeriği: " />
+								<h:inputTextarea style="width: 500px; height: 320px"
+										value="#{KullaniciBean.blogAciklama}" />
+						</h:panelGrid>
+						<h:commandButton style="font-weight: bold; width: 90px"
+								rendered="#{KullaniciBean.blogBaslik.length() eq 0}"
+								action="#{KullaniciBean.blogEkle()}" value="Ekle" />
+				</div>
+				<div id="footer">ABDULLAHSEN</div>
+
+
+
+		</h:form>
+</h:body>
+</html>

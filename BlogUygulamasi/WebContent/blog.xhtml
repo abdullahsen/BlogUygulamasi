@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+		<title>Blog Sitesi</title>
+		<link href="./resources/css/default.css" rel="stylesheet"
+				type="text/css" />
+		<link href="./resources/css/csslayout.css" rel="stylesheet"
+				type="text/css" />
+</h:head>
+<h:body>
+		<h:form>
+				<div id="baslik">#{KullaniciBean.seciliBlog.blogBaslik}</div>
+				<div id="menu">
+						<ul id="nav">
+
+								<li><a href="kullanici.xhtml">Kullanıcı Bilgileri</a></li>
+								<li><h:commandLink
+												rendered="#{KullaniciBean.kullaniciBlogSahibiVeyaAdminMi}"
+												action="#{KullaniciBean.yeniGirdi()}" value="Yeni Girdi" /></li>
+								<li><h:commandLink value="Tüm Girdileri Getir"
+												action="#{KullaniciBean.tumGirdileriGetir()}" /></li>
+								<li><h:commandLink
+												rendered="#{KullaniciBean.kullaniciBlogSahibiVeyaAdminMi}"
+												value="Girdi Düzenle"
+												action="#{KullaniciBean.girdiDuzenleSayfasi(KullaniciBean.seciliGirdi)}" /></li>
+								<li><h:commandLink value="Blogu Sil"
+												action="#{KullaniciBean.bloguSil(KullaniciBean.seciliBlog)}"
+												onclick="return confirm('Blogu silmek istediğinizden emin misiniz?')" /></li>
+						</ul>
+				</div>
+				<div id="sol">
+						<h:outputText value="En Güncel Beş Girdi"
+								style="font-size: 13px; font-weight: bold;" />
+						<br /> <br />
+						<ui:repeat var="girdi" value="#{KullaniciBean.enGuncelBesGirdi}">
+								<h:commandLink value="(*) #{girdi.girdiBaslik}"
+										action="#{KullaniciBean.girdiyeGit(girdi)}" />
+								<br />
+								<br />
+						</ui:repeat>
+				</div>
+
+				<div id="icerik">
+						<hr />
+						<h:outputText style="font-weight: bold; font-size: 30px"
+								rendered="#{KullaniciBean.seciliGirdi != null}"
+								value="#{KullaniciBean.seciliGirdi.girdiBaslik}" />
+						<hr />
+						<br />
+						<h:outputText rendered="#{KullaniciBean.seciliGirdi != null}"
+								value="#{KullaniciBean.seciliGirdi.girdiIcerik}" />
+						<br /> <br />
+						<hr />
+						<h:outputText
+								style="font-style: italic; font-size: 20px; font-weight: bold;"
+								rendered="#{KullaniciBean.seciliGirdi.yorumSayisi == 0}"
+								value="Bu girdi için yorum yapılmamıştır." />
+						<h:outputText
+								rendered="#{KullaniciBean.seciliGirdi.yorumSayisi gt 0}"
+								value="Yorumlar #{KullaniciBean.seciliGirdi.yorumSayisi}"
+								style="font-size: 20px; font-weight: bold;" />
+						<h:outputText
+								rendered="#{KullaniciBean.seciliGirdi.yorumSayisi gt 3}"
+								value="Tüm Yorumları Gör"
+								action="#{KullaniciBean.tumYorumlarıListele()}" />
+						<h:outputText
+								rendered="#{KullaniciBean.seciliGirdi.yorumSayisi==0}"
+								value="Toplam #{KullaniciBean.seciliGirdi.yorumSayisi} Yorum" />
+						<br />
+						<hr />
+						<ui:repeat var="yorum"
+								value="#{KullaniciBean.seciliGirdi.yorumlar}">
+								<h:outputText style="font-weight: bold; font-size: 12px"
+										value="#{yorum.yorumBaslik}" />
+								<br />
+								<br />
+								<h:outputText value="#{yorum.yorumIcerik}" />
+								<h:panelGrid columns="7">
+										<h:outputText style="font-weight: bold" value="Gönderen:" />
+										<h:outputText value="#{yorum.kullanici.kullaniciEmail}" />
+										<h:outputText style="font-weight: bold" value="Tarih:" />
+										<h:outputText value="#{yorum.yorumTarih}" />
+										<h:commandLink
+												rendered="#{KullaniciBean.kullaniciBlogSahibiVeyaAdminMi}"
+												action="#{KullaniciBean.yorumDuzenleSayfasi(yorum)}"
+												value="Yorumu Düzenle" />
+										<h:commandLink
+												rendered="#{KullaniciBean.kullaniciBlogSahibiVeyaAdminMi}"
+												action="#{KullaniciBean.yorumSil(yorum)}" value="Yorumu Sil" />
+								</h:panelGrid>
+								<hr />
+						</ui:repeat>
+						<h:commandLink action="#{KullaniciBean.yorumDuzenleSayfasi()}"
+								value="Yorum Yap" />
+				</div>
+				<div id="footer">ABDULLAHSEn</div>
+		</h:form>
+</h:body>
+</html>
