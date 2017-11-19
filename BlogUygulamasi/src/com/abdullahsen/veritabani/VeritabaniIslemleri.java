@@ -18,7 +18,7 @@ public class VeritabaniIslemleri {
 	public VeritabaniIslemleri() {
 		this.veritabaniURL = "jdbc:mysql://localhost:3306/BlogUygulamasi?useUnicode=true&characterEncoding=UTF-8";
 		this.kullaniciAdi = "root";
-		this.sifre = "aa1991";
+		this.sifre = "root";
 		System.out.println("bağlantı hazır");
 	}
 
